@@ -2,11 +2,13 @@
  * @description App
  * @author      C. M. de Picciotto <d3p1@d3p1.dev> (https://d3p1.dev/)
  */
+import Car from './core/car.js'
+
 export default class App {
   /**
-   * @type {HTMLCanvasElement}
+   * @type {Car}
    */
-  canvas
+  car
 
   /**
    * @type {CanvasRenderingContext2D}
@@ -14,10 +16,16 @@ export default class App {
   context
 
   /**
+   * @type {HTMLCanvasElement}
+   */
+  canvas
+
+  /**
    * Constructor
    */
-  constructor() {
+  constructor(car = new Car(0, 0, 50, 100)) {
     this.#initCanvas()
+    this.#initCar(car)
   }
 
   /**
@@ -25,7 +33,26 @@ export default class App {
    *
    * @returns {void}
    */
-  run() {}
+  run(t = 0) {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+    this.car.update(t)
+    this.car.draw(this.context)
+
+    requestAnimationFrame(this.run.bind(this))
+  }
+
+  /**
+   * Init car
+   *
+   * @param   {Car}  car
+   * @returns {void}
+   */
+  #initCar(car) {
+    this.car = car
+    this.car.centerX = this.canvas.width / 2
+    this.car.centerY = this.canvas.height / 2
+  }
 
   /**
    * Init canvas
