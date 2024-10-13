@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/d3p1/self-driving-car/compare/v1.1.0...v1.1.1) (2024-10-13)
+
+
+### Bug Fixes
+
+* adjust friction calculation [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([e88c3ab](https://github.com/d3p1/self-driving-car/commit/e88c3ab2c146214a0173804ea206f807ff43be53))
+
 # [1.1.0](https://github.com/d3p1/self-driving-car/compare/v1.0.0...v1.1.0) (2024-10-13)
 
 
