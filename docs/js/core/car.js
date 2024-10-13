@@ -7,6 +7,12 @@ import Control from './car/control.js'
 export default class Car {
   /**
    * @type {number}
+   * @note This is the force that will cause acceleration
+   */
+  force
+
+  /**
+   * @type {number}
    */
   velocity = 0
 
@@ -14,21 +20,6 @@ export default class Car {
    * @type {number}
    */
   acceleration = 0
-
-  /**
-   * @type {Control}
-   */
-  control
-
-  /**
-   * @type {number}
-   */
-  friction
-
-  /**
-   * @type {number}
-   */
-  force
 
   /**
    * @type {number}
@@ -51,13 +42,17 @@ export default class Car {
   height
 
   /**
+   * @type {Control}
+   */
+  control
+
+  /**
    * Constructor
    *
    * @param {number}  centerX
    * @param {number}  centerY
    * @param {number}  width
    * @param {number}  height
-   * @param {number}  friction
    * @param {number}  force
    * @param {Control} control
    */
@@ -66,7 +61,6 @@ export default class Car {
     centerY,
     width,
     height,
-    friction = 50,
     force = 200,
     control = new Control(),
   ) {
@@ -74,7 +68,6 @@ export default class Car {
     this.centerY = centerY
     this.width = width
     this.height = height
-    this.friction = friction
     this.force = force
     this.control = control
   }
@@ -89,7 +82,6 @@ export default class Car {
     this.control.update(t)
 
     this.#applyAcceleration(t)
-    this.#applyFriction(t)
     this.#applyDisplacement(t)
   }
 
@@ -98,9 +90,6 @@ export default class Car {
    *
    * @param   {CanvasRenderingContext2D} context
    * @returns {void}
-   * @note    Just in case, it is used `beginPath()`, but I think that
-   *          this method is only necessary when it is drawn a path using
-   *          drawing commands like `lineTo()`, `arc()`, etc.
    */
   draw(context) {
     context.save()
@@ -130,29 +119,6 @@ export default class Car {
     }
 
     this.velocity += this.acceleration * t
-  }
-
-  /**
-   * Apply friction
-   *
-   * @param   {number} t Delta time in seconds
-   * @returns {void}
-   * @note    Friction is a force that is always opposite
-   *          to the movement/velocity.
-   *          If there is no movement, there is no friction.
-   *          That is why friction decelerates the movement/velocity
-   *          until it reaches `0`. At that moment, the friction disappears
-   */
-  #applyFriction(t) {
-    const dragEffect = this.friction * t
-
-    if (dragEffect >= Math.abs(this.velocity)) {
-      this.velocity = 0
-    } else if (this.velocity > 0) {
-      this.velocity -= dragEffect
-    } else if (this.velocity < 0) {
-      this.velocity += dragEffect
-    }
   }
 
   /**

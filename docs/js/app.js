@@ -4,12 +4,24 @@
  */
 import Timer from './utils/timer.js'
 import Car from './core/car.js'
+import CarControl from './core/car/control.js'
+import World from './core/world.js'
 
 export default class App {
+  /**
+   * @type {World}
+   */
+  world
+
   /**
    * @type {Car}
    */
   car
+
+  /**
+   * @type {CarControl}
+   */
+  carControl
 
   /**
    * @type {Timer}
@@ -28,11 +40,23 @@ export default class App {
 
   /**
    * Constructor
+   *
+   * @param {World}      world
+   * @param {CarControl} carControl
+   * @param {Car}        car
+   * @param {Timer}      timer
    */
-  constructor(car = new Car(0, 0, 50, 100), timer = new Timer()) {
+  constructor(
+    world = new World(10),
+    carControl = new CarControl(25),
+    car = new Car(0, 0, 50, 100, 500, carControl),
+    timer = new Timer(),
+  ) {
     this.#initCanvas()
+    this.#initCarControl(carControl)
     this.#initCar(car)
-    this.timer = timer
+    this.#initWorld(world, carControl, car)
+    this.#initTimer(timer)
   }
 
   /**
@@ -46,10 +70,35 @@ export default class App {
     this.timer.update(t)
 
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.world.update(this.timer.delta)
     this.car.update(this.timer.delta)
     this.car.draw(this.context)
 
     requestAnimationFrame(this.run.bind(this))
+  }
+
+  /**
+   * Init world
+   *
+   * @param   {World}      world
+   * @param   {CarControl} carControl
+   * @param   {Car}        car
+   * @returns {void}
+   */
+  #initWorld(world, carControl, car) {
+    this.world = world
+    this.world.add(carControl, null, null, 'omega', 'alpha')
+    this.world.add(car, 'centerX', 'centerY', 'velocity', 'acceleration')
+  }
+
+  /**
+   * Init car control
+   *
+   * @param   {CarControl} carControl
+   * @returns {void}
+   */
+  #initCarControl(carControl) {
+    this.carControl = carControl
   }
 
   /**
@@ -62,6 +111,16 @@ export default class App {
     this.car = car
     this.car.centerX = this.canvas.width / 2
     this.car.centerY = this.canvas.height / 2
+  }
+
+  /**
+   * Init timer
+   *
+   * @param   {Timer} timer
+   * @returns {void}
+   */
+  #initTimer(timer) {
+    this.timer = timer
   }
 
   /**

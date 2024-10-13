@@ -5,12 +5,7 @@
 export default class Control {
   /**
    * @type {number}
-   */
-  friction
-
-  /**
-   * @type {number}
-   * @note This is the angular force
+   * @note This is the angular force that will cause acceleration
    */
   torque
 
@@ -56,11 +51,9 @@ export default class Control {
   /**
    * Constructor
    *
-   * @param {number} friction
    * @param {number} torque
    */
-  constructor(friction = 5, torque = 20) {
-    this.friction = friction
+  constructor(torque = 20) {
     this.torque = torque
 
     this.#addKeyListeners()
@@ -75,31 +68,7 @@ export default class Control {
    */
   update(t) {
     this.#applyAcceleration(t)
-    this.#applyFriction(t)
-    this.angle += this.omega * t
-  }
-
-  /**
-   * Apply friction
-   *
-   * @param   {number} t Delta time in seconds
-   * @returns {void}
-   * @note    Friction is a force that is always opposite
-   *          to the movement/velocity/`omega`.
-   *          If there is no movement, there is no friction.
-   *          That is why friction decelerates the movement/velocity/`omega`
-   *          until it reaches `0`. At that moment, the friction disappears
-   */
-  #applyFriction(t) {
-    const dragEffect = this.friction * t
-
-    if (dragEffect >= Math.abs(this.omega)) {
-      this.omega = 0
-    } else if (this.omega > 0) {
-      this.omega -= dragEffect
-    } else if (this.omega < 0) {
-      this.omega += dragEffect
-    }
+    this.#applyDisplacement(t)
   }
 
   /**
@@ -114,6 +83,17 @@ export default class Control {
    */
   #applyAcceleration(t) {
     this.omega += this.alpha * t
+  }
+
+  /**
+   * Apply displacement
+   *
+   * @param   {number} t Delta time in seconds
+   * @returns {void}
+   * @note    Displacement is velocity times time
+   */
+  #applyDisplacement(t) {
+    this.angle += this.omega * t
   }
 
   /**
