@@ -2,7 +2,14 @@
  * @description Car
  * @author      C. M. de Picciotto <d3p1@d3p1.dev> (https://d3p1.dev/)
  */
+import Control from './car/control.js'
+
 export default class Car {
+  /**
+   * @type {Control}
+   */
+  control
+
   /**
    * @type {number}
    */
@@ -26,26 +33,28 @@ export default class Car {
   /**
    * Constructor
    *
-   * @param {number} centerX
-   * @param {number} centerY
-   * @param {number} width
-   * @param {number} height
+   * @param {number}  centerX
+   * @param {number}  centerY
+   * @param {number}  width
+   * @param {number}  height
+   * @param {Control} control
    */
-  constructor(centerX, centerY, width, height) {
+  constructor(centerX, centerY, width, height, control = new Control()) {
     this.centerX = centerX
     this.centerY = centerY
     this.width = width
     this.height = height
+    this.control = control
   }
 
   /**
    * Update car
    *
-   * @param   {number} t
+   * @param   {number} t Delta time in seconds
    * @returns {void}
    */
   update(t) {
-    console.log(t)
+    this.control.update(t)
   }
 
   /**
@@ -58,13 +67,23 @@ export default class Car {
    *          drawing commands like `lineTo()`, `arc()`, etc.
    */
   draw(context) {
+    context.save()
+    context.translate(this.centerX, this.centerY)
+    context.rotate(this.control.angle)
+    this.#draw(context, -this.width / 2, -this.height / 2)
+    context.restore()
+  }
+
+  /**
+   * Draw
+   *
+   * @param {CanvasRenderingContext2D} context
+   * @param {number}                   x
+   * @param {number}                   y
+   */
+  #draw(context, x, y) {
     context.beginPath()
-    context.rect(
-      this.centerX - this.width / 2,
-      this.centerY - this.height / 2,
-      this.width,
-      this.height,
-    )
+    context.rect(x, y, this.width, this.height)
     context.fill()
   }
 }
