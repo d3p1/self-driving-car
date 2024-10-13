@@ -135,7 +135,15 @@ export default class Control {
    */
   #addKeyDownListener() {
     window.addEventListener('keydown', (e) => {
-      switch (e.code) {
+      let code = e.code
+
+      if (this.reverse && code === 'ArrowLeft') {
+        code = 'ArrowRight'
+      } else if (this.reverse && code === 'ArrowRight') {
+        code = 'ArrowLeft'
+      }
+
+      switch (code) {
         case 'ArrowUp':
           this.forward = true
           break
