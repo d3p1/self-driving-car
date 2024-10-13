@@ -2,6 +2,7 @@
  * @description App
  * @author      C. M. de Picciotto <d3p1@d3p1.dev> (https://d3p1.dev/)
  */
+import Timer from './utils/timer.js'
 import Car from './core/car.js'
 
 export default class App {
@@ -9,6 +10,11 @@ export default class App {
    * @type {Car}
    */
   car
+
+  /**
+   * @type {Timer}
+   */
+  timer
 
   /**
    * @type {CanvasRenderingContext2D}
@@ -23,20 +29,24 @@ export default class App {
   /**
    * Constructor
    */
-  constructor(car = new Car(0, 0, 50, 100)) {
+  constructor(car = new Car(0, 0, 50, 100), timer = new Timer()) {
     this.#initCanvas()
     this.#initCar(car)
+    this.timer = timer
   }
 
   /**
    * Run
    *
+   * @param   {number} t Elapsed time in milliseconds
+   *                     since the init of the animation
    * @returns {void}
    */
   run(t = 0) {
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.timer.update(t)
 
-    this.car.update(t)
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.car.update(this.timer.delta)
     this.car.draw(this.context)
 
     requestAnimationFrame(this.run.bind(this))
