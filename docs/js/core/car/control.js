@@ -59,7 +59,7 @@ export default class Control {
    * @param {number} friction
    * @param {number} torque
    */
-  constructor(friction = 0, torque = 20) {
+  constructor(friction = 5, torque = 20) {
     this.friction = friction
     this.torque = torque
 
@@ -91,12 +91,14 @@ export default class Control {
    *          until it reaches `0`. At that moment, the friction disappears
    */
   #applyFriction(t) {
-    if (Math.abs(this.friction) > Math.abs(this.omega)) {
+    const dragEffect = this.friction * t
+
+    if (dragEffect >= Math.abs(this.omega)) {
       this.omega = 0
     } else if (this.omega > 0) {
-      this.omega -= this.friction * t
+      this.omega -= dragEffect
     } else if (this.omega < 0) {
-      this.omega += this.friction * t
+      this.omega += dragEffect
     }
   }
 
@@ -174,9 +176,6 @@ export default class Control {
    *          Because `torque` is an angular force,
    *          and every force causes acceleration, then
    *          the `alpha`/angular acceleration is removed
-   * @todo    For now, we are note going to use friction, and the
-   *          `omega`/angular velocity will be reduce immediately to `0`
-   *          without any force acting on it
    */
   #addKeyUpListener() {
     window.addEventListener('keyup', (e) => {
@@ -192,13 +191,11 @@ export default class Control {
         case 'ArrowLeft':
           this.left = false
           this.alpha = 0
-          this.omega = 0
           break
 
         case 'ArrowRight':
           this.right = false
           this.alpha = 0
-          this.omega = 0
           break
       }
     })

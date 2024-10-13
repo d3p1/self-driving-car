@@ -66,8 +66,8 @@ export default class Car {
     centerY,
     width,
     height,
-    friction = 1,
-    force = 100,
+    friction = 50,
+    force = 200,
     control = new Control(),
   ) {
     this.centerX = centerX
@@ -144,12 +144,14 @@ export default class Car {
    *          until it reaches `0`. At that moment, the friction disappears
    */
   #applyFriction(t) {
-    if (Math.abs(this.friction) > Math.abs(this.velocity)) {
+    const dragEffect = this.friction * t
+
+    if (dragEffect >= Math.abs(this.velocity)) {
       this.velocity = 0
     } else if (this.velocity > 0) {
-      this.velocity -= this.friction * t
+      this.velocity -= dragEffect
     } else if (this.velocity < 0) {
-      this.velocity += this.friction * t
+      this.velocity += dragEffect
     }
   }
 
