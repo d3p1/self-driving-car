@@ -137,13 +137,7 @@ export default class Control {
    */
   #addKeyDownListener() {
     window.addEventListener('keydown', (e) => {
-      let code = e.code
-
-      if (this.reverse && code === 'ArrowLeft') {
-        code = 'ArrowRight'
-      } else if (this.reverse && code === 'ArrowRight') {
-        code = 'ArrowLeft'
-      }
+      const code = this.#processKeyCode(e.code)
 
       switch (code) {
         case 'ArrowUp':
@@ -179,7 +173,9 @@ export default class Control {
    */
   #addKeyUpListener() {
     window.addEventListener('keyup', (e) => {
-      switch (e.code) {
+      const code = this.#processKeyCode(e.code)
+
+      switch (code) {
         case 'ArrowUp':
           this.forward = false
           break
@@ -199,5 +195,23 @@ export default class Control {
           break
       }
     })
+  }
+
+  /**
+   * Process key code
+   *
+   * @param   {string} code
+   * @returns {string}
+   * @note    When the car is in reversed mode,
+   *          then left and right should be switched to
+   *          make the experience of driving in reverse mode easier
+   */
+  #processKeyCode(code) {
+    if (this.reverse && code === 'ArrowLeft') {
+      code = 'ArrowRight'
+    } else if (this.reverse && code === 'ArrowRight') {
+      code = 'ArrowLeft'
+    }
+    return code
   }
 }
