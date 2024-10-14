@@ -62,17 +62,24 @@ export default class App {
    * @param   {number} t Elapsed time in milliseconds
    *                     since the init of the animation
    * @returns {void}
+   * @todo    Encapsulate logic of context `save()`, `translate()`
+   *          and `restore()` related to camera movement
    */
   run(t = 0) {
     this.timer.update(t)
 
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
+    this.context.save()
+    this.context.translate(0, -this.car.centerY * 0.3)
+
     this.car.update(this.timer.delta)
     this.world.update(this.timer.delta)
 
     this.road.draw(this.context)
     this.car.draw(this.context)
+
+    this.context.restore()
 
     requestAnimationFrame(this.run.bind(this))
   }
@@ -114,7 +121,7 @@ export default class App {
   #initCar() {
     this.car = new Car(
       this.road.getLaneCenterFromLaneIndex(2),
-      this.canvas.height / 2,
+      this.canvas.height - this.canvas.height * 0.1,
       50,
       100,
       500,
