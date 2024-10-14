@@ -46,24 +46,14 @@ export default class App {
 
   /**
    * Constructor
-   *
-   * @param {World}      world
-   * @param {CarControl} carControl
-   * @param {Car}        car
-   * @param {Timer}      timer
    */
-  constructor(
-    world = new World(10),
-    carControl = new CarControl(25),
-    car = new Car(0, 0, 50, 100, 500, carControl),
-    timer = new Timer(),
-  ) {
+  constructor() {
     this.#initCanvas()
     this.#initRoad()
-    this.#initCarControl(carControl)
-    this.#initCar(car)
-    this.#initWorld(world, carControl, car)
-    this.#initTimer(timer)
+    this.#initCarControl()
+    this.#initCar()
+    this.#initWorld()
+    this.#initTimer()
   }
 
   /**
@@ -90,15 +80,12 @@ export default class App {
   /**
    * Init world
    *
-   * @param   {World}      world
-   * @param   {CarControl} carControl
-   * @param   {Car}        car
    * @returns {void}
    */
-  #initWorld(world, carControl, car) {
-    this.world = world
-    this.world.add(carControl, null, null, 'omega', 'alpha')
-    this.world.add(car, 'centerX', 'centerY', 'velocity', 'acceleration')
+  #initWorld() {
+    this.world = new World(10)
+    this.world.add(this.carControl, null, null, 'omega', 'alpha')
+    this.world.add(this.car, 'centerX', 'centerY', 'velocity', 'acceleration')
   }
 
   /**
@@ -113,21 +100,19 @@ export default class App {
   /**
    * Init car control
    *
-   * @param   {CarControl} carControl
    * @returns {void}
    */
-  #initCarControl(carControl) {
-    this.carControl = carControl
+  #initCarControl() {
+    this.carControl = new CarControl(25)
   }
 
   /**
    * Init car
    *
-   * @param   {Car}  car
    * @returns {void}
    */
-  #initCar(car) {
-    this.car = car
+  #initCar() {
+    this.car = new Car(0, 0, 50, 100, 500, this.carControl)
     this.car.centerX = this.canvas.width / 2
     this.car.centerY = this.canvas.height / 2
   }
@@ -135,11 +120,10 @@ export default class App {
   /**
    * Init timer
    *
-   * @param   {Timer} timer
    * @returns {void}
    */
-  #initTimer(timer) {
-    this.timer = timer
+  #initTimer() {
+    this.timer = new Timer()
   }
 
   /**
