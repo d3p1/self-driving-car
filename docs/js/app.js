@@ -3,6 +3,7 @@
  * @author      C. M. de Picciotto <d3p1@d3p1.dev> (https://d3p1.dev/)
  */
 import Timer from './utils/timer.js'
+import Road from './core/road.js'
 import Car from './core/car.js'
 import CarControl from './core/car/control.js'
 import World from './core/world.js'
@@ -12,6 +13,11 @@ export default class App {
    * @type {World}
    */
   world
+
+  /**
+   * @type {Road}
+   */
+  road
 
   /**
    * @type {Car}
@@ -53,6 +59,7 @@ export default class App {
     timer = new Timer(),
   ) {
     this.#initCanvas()
+    this.#initRoad()
     this.#initCarControl(carControl)
     this.#initCar(car)
     this.#initWorld(world, carControl, car)
@@ -70,8 +77,11 @@ export default class App {
     this.timer.update(t)
 
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
     this.world.update(this.timer.delta)
     this.car.update(this.timer.delta)
+
+    this.road.draw(this.context)
     this.car.draw(this.context)
 
     requestAnimationFrame(this.run.bind(this))
@@ -89,6 +99,15 @@ export default class App {
     this.world = world
     this.world.add(carControl, null, null, 'omega', 'alpha')
     this.world.add(car, 'centerX', 'centerY', 'velocity', 'acceleration')
+  }
+
+  /**
+   * Init road
+   *
+   * @returns {void}
+   */
+  #initRoad() {
+    this.road = new Road(this.canvas.width / 2, this.canvas.width * 0.9)
   }
 
   /**
