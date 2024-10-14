@@ -8,13 +8,20 @@ export default class Car {
   /**
    * @type {number}
    * @note This is the force that will cause acceleration
+   * @note For now, it is considered that force cause acceleration without
+   *       taking into consideration mass
+   *       (acceleration is force divided by mass)
    */
   force
 
   /**
    * @type {number}
+   * @note It is defined as speed and not velocity, because velocity is
+   *       speed and direction.
+   *       This property will store the magnitude of the
+   *       velocity, and the direction will be given by the control angle
    */
-  velocity = 0
+  speed = 0
 
   /**
    * @type {number}
@@ -86,7 +93,7 @@ export default class Car {
   }
 
   /**
-   * Draw car
+   * Draw the car
    *
    * @param   {CanvasRenderingContext2D} context
    * @returns {void}
@@ -118,7 +125,7 @@ export default class Car {
       this.acceleration = 0
     }
 
-    this.velocity += this.acceleration * t
+    this.speed += this.acceleration * t
   }
 
   /**
@@ -126,11 +133,11 @@ export default class Car {
    *
    * @param   {number} t Delta time in seconds
    * @returns {void}
-   * @note    Displacement is velocity times time
+   * @note    Displacement is velocity (speed and a direction) times time
    */
   #applyDisplacement(t) {
-    this.centerX += Math.sin(this.control.angle) * this.velocity * t
-    this.centerY -= Math.cos(this.control.angle) * this.velocity * t
+    this.centerX += Math.sin(this.control.angle) * this.speed * t
+    this.centerY -= Math.cos(this.control.angle) * this.speed * t
   }
 
   /**

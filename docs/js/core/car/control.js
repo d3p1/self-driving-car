@@ -6,6 +6,9 @@ export default class Control {
   /**
    * @type {number}
    * @note This is the angular force that will cause acceleration
+   * @note For now, it is considered that force cause acceleration without
+   *       taking into consideration mass
+   *       (acceleration is force divided by mass)
    */
   torque
 
