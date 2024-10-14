@@ -78,8 +78,8 @@ export default class App {
 
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
-    this.world.update(this.timer.delta)
     this.car.update(this.timer.delta)
+    this.world.update(this.timer.delta)
 
     this.road.draw(this.context)
     this.car.draw(this.context)
