@@ -1,3 +1,20 @@
+# [1.2.0](https://github.com/d3p1/self-driving-car/compare/v1.1.1...v1.2.0) (2024-10-14)
+
+
+### Bug Fixes
+
+* improve location of world update [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([99af834](https://github.com/d3p1/self-driving-car/commit/99af83485d158eec868a99ab1410f0cb03e2827a))
+* improve math utility name to avoid naming conflicts with JavaScript native class [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([0ec2d3d](https://github.com/d3p1/self-driving-car/commit/0ec2d3d28b6f2e997424248003b1c16e4f4f790e))
+
+
+### Features
+
+* add camera movement [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([b6ca609](https://github.com/d3p1/self-driving-car/commit/b6ca60916b2814f79aacc1c94eefa5a1bc086302))
+* add road lane draw logic [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([ba30b11](https://github.com/d3p1/self-driving-car/commit/ba30b117f12aaa5443daf26d1b074bca87684343))
+* improve body background color [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([b68c115](https://github.com/d3p1/self-driving-car/commit/b68c11506bf7b2f7f026fe008d5047b7cb9c09a7))
+* init math utility [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([a2d7104](https://github.com/d3p1/self-driving-car/commit/a2d7104f6e3c2d24fc1ba902204263a50956911c))
+* init road [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([65e1386](https://github.com/d3p1/self-driving-car/commit/65e1386b2c6161151e143bdad6673e4ac6ba95b5))
+
 ## [1.1.1](https://github.com/d3p1/self-driving-car/compare/v1.1.0...v1.1.1) (2024-10-13)
 
 
