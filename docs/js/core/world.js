@@ -30,11 +30,11 @@ export default class World {
   /**
    * Add an object to the world
    *
-   * @param   {object} object
-   * @param   {string} positionXPropName
-   * @param   {string} positionYPropName
-   * @param   {string} velocity
-   * @param   {string} acceleration
+   * @param   {object}      object
+   * @param   {string|null} positionXPropName
+   * @param   {string|null} positionYPropName
+   * @param   {string|null} velocity
+   * @param   {string|null} acceleration
    * @returns {void}
    */
   add(object, positionXPropName, positionYPropName, velocity, acceleration) {
