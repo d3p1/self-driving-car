@@ -112,9 +112,14 @@ export default class App {
    * @returns {void}
    */
   #initCar() {
-    this.car = new Car(0, 0, 50, 100, 500, this.carControl)
-    this.car.centerX = this.canvas.width / 2
-    this.car.centerY = this.canvas.height / 2
+    this.car = new Car(
+      this.road.getLaneCenterFromLaneIndex(2),
+      this.canvas.height / 2,
+      50,
+      100,
+      500,
+      this.carControl,
+    )
   }
 
   /**

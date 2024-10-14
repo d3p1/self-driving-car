@@ -2,7 +2,7 @@
  * @description Math utility
  * @author      C. M. de Picciotto <d3p1@d3p1.dev> (https://d3p1.dev/)
  */
-export default class Math {
+export default class Mathy {
   /**
    * Linear interpolation between two points
    *

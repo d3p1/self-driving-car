@@ -2,7 +2,7 @@
  * @description Road
  * @author      C. M. de Picciotto <d3p1@d3p1.dev> (https://d3p1.dev/)
  */
-import Math from '../utils/math.js'
+import Mathy from '../utils/mathy.js'
 
 /**
  * @const {number} INFINITY
@@ -104,6 +104,22 @@ export default class Road {
   }
 
   /**
+   * Get the lane center
+   *
+   * @param   {number} laneIndex Index that defines lane position
+   *                             (starting at `0` from left to right)
+   * @returns {number}
+   */
+  getLaneCenterFromLaneIndex(laneIndex) {
+    return Mathy.lerp(
+      this.left,
+      this.right,
+      (Math.min(laneIndex, this.laneCount - 1) + 1) / this.laneCount -
+        (1 / this.laneCount) * 0.5,
+    )
+  }
+
+  /**
    * Draw the road
    *
    * @param   {CanvasRenderingContext2D} context
@@ -152,7 +168,7 @@ export default class Road {
   #drawLanes(context) {
     context.setLineDash([this.laneDelimiterHeight, this.laneDelimiterGap])
     for (let i = 1; i < this.laneCount; i++) {
-      const x = Math.lerp(this.left, this.right, i / this.laneCount)
+      const x = Mathy.lerp(this.left, this.right, i / this.laneCount)
       this.#drawLine(
         context,
         {
