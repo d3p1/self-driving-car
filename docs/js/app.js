@@ -95,7 +95,7 @@ export default class App {
    */
   #draw() {
     this.context.save()
-    this.context.translate(0, -this.car.centerY * 0.3)
+    this.context.translate(0, -this.car.centerY * 0.4)
     this.road.draw(this.context)
     this.car.draw(this.context)
     this.context.restore()
@@ -107,7 +107,7 @@ export default class App {
    * @returns {void}
    */
   #initWorld() {
-    this.world = new World(10)
+    this.world = new World(50)
     this.world.add(this.carControl, null, null, 'omega', 'alpha')
     this.world.add(this.car, 'centerX', 'centerY', 'speed', 'acceleration')
   }
@@ -141,7 +141,7 @@ export default class App {
       this.canvas.height - this.canvas.height * 0.1,
       50,
       100,
-      500,
+      200,
       this.carControl,
     )
   }
