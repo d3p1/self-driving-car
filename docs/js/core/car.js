@@ -3,6 +3,7 @@
  * @author      C. M. de Picciotto <d3p1@d3p1.dev> (https://d3p1.dev/)
  */
 import Control from './car/control.js'
+import Sensor from './car/sensor.js'
 
 export default class Car {
   /**
@@ -54,6 +55,11 @@ export default class Car {
   control
 
   /**
+   * @type {Sensor}
+   */
+  sensor
+
+  /**
    * Constructor
    *
    * @param {number}  centerX
@@ -62,6 +68,7 @@ export default class Car {
    * @param {number}  height
    * @param {number}  force
    * @param {Control} control
+   * @param {Sensor}  sensor
    */
   constructor(
     centerX,
@@ -70,6 +77,7 @@ export default class Car {
     height,
     force = 200,
     control = new Control(),
+    sensor = new Sensor(),
   ) {
     this.centerX = centerX
     this.centerY = centerY
@@ -77,6 +85,7 @@ export default class Car {
     this.height = height
     this.force = force
     this.control = control
+    this.sensor = sensor
   }
 
   /**
@@ -90,6 +99,8 @@ export default class Car {
 
     this.#applyAcceleration(t)
     this.#applyDisplacement(t)
+
+    this.sensor.update(this.control.angle, this.centerX, this.centerY)
   }
 
   /**
@@ -104,6 +115,8 @@ export default class Car {
     context.rotate(this.control.angle)
     this.#draw(context, -this.width / 2, -this.height / 2)
     context.restore()
+
+    this.sensor.draw(context)
   }
 
   /**
