@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/d3p1/self-driving-car/compare/v1.2.0...v1.3.0) (2024-10-19)
+
+
+### Features
+
+* init process segment intersection utility function [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([5342d39](https://github.com/d3p1/self-driving-car/commit/5342d3968a5a0bb0f95d4ac9d05ec5d5ef36192f))
+* init sensor [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([1ec98a1](https://github.com/d3p1/self-driving-car/commit/1ec98a152d47138e68ee290a78cbcb1570d1abaf))
+* init sensor ray intersection logic [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([6724045](https://github.com/d3p1/self-driving-car/commit/67240459a715ea61e2996c53737ee94b9a2b15fb))
+
 # [1.2.0](https://github.com/d3p1/self-driving-car/compare/v1.1.1...v1.2.0) (2024-10-14)
 
 
