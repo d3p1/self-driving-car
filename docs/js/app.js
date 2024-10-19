@@ -109,7 +109,7 @@ export default class App {
   #initWorld() {
     this.world = new World(10)
     this.world.add(this.carControl, null, null, 'omega', 'alpha')
-    this.world.add(this.car, 'centerX', 'centerY', 'velocity', 'acceleration')
+    this.world.add(this.car, 'centerX', 'centerY', 'speed', 'acceleration')
   }
 
   /**
