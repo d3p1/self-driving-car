@@ -66,22 +66,39 @@ export default class App {
    *          and `restore()` related to camera movement
    */
   run(t = 0) {
-    this.timer.update(t)
-
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.#update(t)
+    this.#draw()
+    requestAnimationFrame(this.run.bind(this))
+  }
 
-    this.context.save()
-    this.context.translate(0, -this.car.centerY * 0.3)
-
+  /**
+   * Update objects
+   *
+   * @param {number} t Elapsed time in milliseconds
+   *                   since the init of the animation
+   * @returns {void}
+   */
+  #update(t) {
+    this.timer.update(t)
     this.car.update(this.timer.delta, this.road.borders)
     this.world.update(this.timer.delta)
+  }
 
+  /**
+   * Draw objects
+   *
+   * @returns {void}
+   * @note    It is used a translation of the coordinate origin
+   *          with respect to the car position
+   *          to generate the effect of road movement
+   */
+  #draw() {
+    this.context.save()
+    this.context.translate(0, -this.car.centerY * 0.3)
     this.road.draw(this.context)
     this.car.draw(this.context)
-
     this.context.restore()
-
-    requestAnimationFrame(this.run.bind(this))
   }
 
   /**
