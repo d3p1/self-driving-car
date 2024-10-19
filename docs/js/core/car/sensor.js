@@ -11,17 +11,10 @@ export default class Sensor {
   rays
 
   /**
-   * @type {{x: number, y: number, offset: number}[][]}
+   * @type {{x: number, y: number, offset: number}|null[]}
    * @note This array will share the `rays` index.
    *       Its elements will be related to the respective ray
-   */
-  touches
-
-  /**
-   * @type {{x: number, y: number, offset: number}[][]}
-   * @note This array will share the `rays` index.
-   *       Its elements will be related to the respective ray
-   * @note This array will store the touch with min offset fora ray
+   * @note This array will store the touch with min offset for a ray
    */
   readings
 
@@ -52,20 +45,21 @@ export default class Sensor {
     this.raySpreadAngle = raySpreadAngle
     this.rayRadius = rayRadius
     this.rays = []
-    this.touches = []
     this.readings = []
   }
 
   /**
    * Update
    *
-   * @param   {number} carAngle
-   * @param   {number} carCenterX
-   * @param   {number} carCenterY
+   * @param   {number}                     carAngle
+   * @param   {number}                     carCenterX
+   * @param   {number}                     carCenterY
+   * @param   {{x: number, y: number}[][]} roadBorders
    * @returns {void}
    */
-  update(carAngle, carCenterX, carCenterY) {
+  update(carAngle, carCenterX, carCenterY, roadBorders) {
     this.#createRaySegments(carAngle, carCenterX, carCenterY)
+    this.#processIntersections(roadBorders)
   }
 
   /**
@@ -75,9 +69,56 @@ export default class Sensor {
    * @returns {void}
    */
   draw(context) {
-    for (const ray of this.rays) {
+    for (let i = 0; i < this.rayCount; i++) {
+      const ray = this.rays[i]
+
       this.#drawRay(context, ray)
+      if (this.readings[i]) {
+        this.#drawRayIntersection(context, ray, this.readings[i])
+      }
     }
+  }
+
+  /**
+   * Process intersections
+   *
+   * @param   {{x: number, y: number}[][]} roadBorders
+   * @returns {void}
+   */
+  #processIntersections(roadBorders) {
+    this.readings = []
+
+    for (let i = 0; i < this.rayCount; i++) {
+      const touches = []
+      for (let j = 0; j < roadBorders.length; j++) {
+        const intersection = Mathy.processSegmentIntersection(
+          this.rays[i],
+          roadBorders[j],
+        )
+
+        if (intersection) {
+          touches.push(intersection)
+        }
+      }
+
+      if (touches.length) {
+        this.readings[i] = this.#processTouches(touches)
+      } else {
+        this.readings[i] = null
+      }
+    }
+  }
+
+  /**
+   * Get min touch
+   *
+   * @param   {{x: number, y: number, offset: number}[]} touches
+   * @returns {{x: number, y: number, offset: number}}
+   */
+  #processTouches(touches) {
+    const offsets = touches.map((item) => item.offset)
+    const minOffset = Math.min(...offsets)
+    return touches.filter((item) => item.offset <= minOffset)[0]
   }
 
   /**
@@ -92,6 +133,23 @@ export default class Sensor {
     context.lineWidth = 2
     context.strokeStyle = 'hsl(45,100%,50%)'
     context.moveTo(ray[0].x, ray[0].y)
+    context.lineTo(ray[1].x, ray[1].y)
+    context.stroke()
+  }
+
+  /**
+   * Draw ray intersection
+   *
+   * @param   {CanvasRenderingContext2D} context
+   * @param   {{x: number, y: number}[]} ray
+   * @param   {{x: number, y: number}}   reading
+   * @returns {void}
+   */
+  #drawRayIntersection(context, ray, reading) {
+    context.beginPath()
+    context.lineWidth = 2
+    context.strokeStyle = 'hsl(0,0%,0%)'
+    context.moveTo(reading.x, reading.y)
     context.lineTo(ray[1].x, ray[1].y)
     context.stroke()
   }

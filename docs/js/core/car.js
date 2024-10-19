@@ -91,16 +91,22 @@ export default class Car {
   /**
    * Update car
    *
-   * @param   {number} t Delta time in seconds
+   * @param   {number}                     t           Delta time in seconds
+   * @param   {{x: number, y: number}[][]} roadBorders Road borders
    * @returns {void}
    */
-  update(t) {
+  update(t, roadBorders) {
     this.control.update(t)
 
     this.#applyAcceleration(t)
     this.#applyDisplacement(t)
 
-    this.sensor.update(this.control.angle, this.centerX, this.centerY)
+    this.sensor.update(
+      this.control.angle,
+      this.centerX,
+      this.centerY,
+      roadBorders,
+    )
   }
 
   /**

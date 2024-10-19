@@ -73,7 +73,7 @@ export default class App {
     this.context.save()
     this.context.translate(0, -this.car.centerY * 0.3)
 
-    this.car.update(this.timer.delta)
+    this.car.update(this.timer.delta, this.road.borders)
     this.world.update(this.timer.delta)
 
     this.road.draw(this.context)
