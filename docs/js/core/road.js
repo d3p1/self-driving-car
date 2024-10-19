@@ -9,7 +9,7 @@ import Mathy from '../utils/mathy.js'
  * @note  It is mentioned that working with native infinity constant could
  *        cause issues during calculation
  */
-const INFINITY = 100000000
+const INFINITY = 10000000
 
 export default class Road {
   /**
@@ -208,7 +208,7 @@ export default class Road {
   #initRoadParameters() {
     this.left = this.centerX - this.width / 2
     this.right = this.centerX + this.width / 2
-    this.top = 0
+    this.top = -INFINITY
     this.bottom = INFINITY
 
     const topLeft = {x: this.left, y: this.top}
