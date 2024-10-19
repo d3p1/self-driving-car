@@ -1,3 +1,12 @@
+## [1.3.1](https://github.com/d3p1/self-driving-car/compare/v1.3.0...v1.3.1) (2024-10-19)
+
+
+### Bug Fixes
+
+* adjust friction on car [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([0ab60db](https://github.com/d3p1/self-driving-car/commit/0ab60db0dd0bc7fba417d21bbb52474d47e3ede8))
+* adjust physic params [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([16993c5](https://github.com/d3p1/self-driving-car/commit/16993c550e464bbf04acf0d6ea1f9f51ed9e4add))
+* adjust road generation logic [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([5d948a2](https://github.com/d3p1/self-driving-car/commit/5d948a27693cd48c85072db5746142818b00c335))
+
 # [1.3.0](https://github.com/d3p1/self-driving-car/compare/v1.2.0...v1.3.0) (2024-10-19)
 
 
