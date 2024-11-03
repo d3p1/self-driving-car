@@ -6,6 +6,7 @@ import Timer from './utils/timer.js'
 import Road from './core/road.js'
 import Car from './core/car.js'
 import CarControl from './core/car/control.js'
+import Camera from './core/camera.js'
 import World from './core/world.js'
 
 export default class App {
@@ -30,6 +31,11 @@ export default class App {
   carControl
 
   /**
+   * @type {Camera}
+   */
+  camera
+
+  /**
    * @type {Timer}
    */
   timer
@@ -52,6 +58,7 @@ export default class App {
     this.#initRoad()
     this.#initCarControl()
     this.#initCar()
+    this.#initCamera()
     this.#initWorld()
     this.#initTimer()
   }
@@ -89,16 +96,9 @@ export default class App {
    * Draw objects
    *
    * @returns {void}
-   * @note    It is used a translation of the coordinate origin
-   *          with respect to the car position
-   *          to generate the effect of road movement
    */
   #draw() {
-    this.context.save()
-    this.context.translate(0, -this.car.centerY * 0.4)
-    this.road.draw(this.context)
-    this.car.draw(this.context)
-    this.context.restore()
+    this.camera.draw(this.context, this.canvas.height * 0.7 - this.car.centerY)
   }
 
   /**
@@ -110,6 +110,15 @@ export default class App {
     this.world = new World(50)
     this.world.add(this.carControl, null, null, 'omega', 'alpha')
     this.world.add(this.car, 'centerX', 'centerY', 'speed', 'acceleration')
+  }
+
+  /**
+   * Init camera
+   *
+   * @returns {void}
+   */
+  #initCamera() {
+    this.camera = new Camera(this.car, this.road)
   }
 
   /**
@@ -137,8 +146,8 @@ export default class App {
    */
   #initCar() {
     this.car = new Car(
-      this.road.getLaneCenterFromLaneIndex(2),
-      this.canvas.height - this.canvas.height * 0.1,
+      this.road.getLaneCenterFromLaneIndex(1),
+      this.canvas.height - this.canvas.height * 0.2,
       50,
       100,
       200,
