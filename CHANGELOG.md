@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/d3p1/self-driving-car/compare/v1.3.1...v1.4.0) (2024-11-03)
+
+
+### Features
+
+* init camera logic that solves road movement [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([4670bd0](https://github.com/d3p1/self-driving-car/commit/4670bd05dce1014fc622fe7a55dc05da51e396cf))
+
 ## [1.3.1](https://github.com/d3p1/self-driving-car/compare/v1.3.0...v1.3.1) (2024-10-19)
 
 
