@@ -201,20 +201,9 @@ export default class Car {
     context.beginPath()
     context.moveTo(this.polygon[0][0].x, this.polygon[0][0].y)
     this.polygon.forEach((segment) => {
-      this.#drawCarSegment(context, segment)
+      context.lineTo(segment[1].x, segment[1].y)
     })
     context.fill()
-  }
-
-  /**
-   * Draw car segment
-   *
-   * @param   {CanvasRenderingContext2D} context
-   * @param   {{x: number, y: number}[]} segment
-   * @returns {void}
-   */
-  #drawCarSegment(context, segment) {
-    context.lineTo(segment[1].x, segment[1].y)
   }
 
   /**
