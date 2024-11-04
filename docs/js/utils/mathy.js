@@ -125,4 +125,22 @@ export default class Mathy {
     }
     return null
   }
+
+  /**
+   * Validate if the polygons intersect
+   *
+   * @param  {{x: number, y: number}[][]} polyA
+   * @param  {{x: number, y: number}[][]} polyB
+   * @return boolean
+   */
+  static hasPolygonIntersection(polyA, polyB) {
+    for (const segmentA of polyA) {
+      for (const segmentB of polyB) {
+        if (this.processSegmentIntersection(segmentA, segmentB)) {
+          return true
+        }
+      }
+    }
+    return false
+  }
 }

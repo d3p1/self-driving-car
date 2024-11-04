@@ -2,10 +2,16 @@
  * @description Car
  * @author      C. M. de Picciotto <d3p1@d3p1.dev> (https://d3p1.dev/)
  */
+import Mathy from '../utils/mathy.js'
 import Control from './car/control.js'
 import Sensor from './car/sensor.js'
 
 export default class Car {
+  /**
+   * @type {boolean}
+   */
+  isDamage = false
+
   /**
    * @type {number}
    * @note This is the force that will cause acceleration
@@ -101,10 +107,14 @@ export default class Car {
    * @returns {void}
    */
   update(t, roadBorders) {
-    this.control.update(t)
+    if (!this.isDamage) {
+      this.control.update(t)
 
-    this.#applyAcceleration(t)
-    this.#applyDisplacement(t)
+      this.#applyAcceleration(t)
+      this.#applyDisplacement(t)
+
+      this.#assessDamage(roadBorders)
+    }
 
     this.sensor.update(
       this.control.angle,
@@ -119,15 +129,30 @@ export default class Car {
    *
    * @param   {CanvasRenderingContext2D} context
    * @returns {void}
-   * @todo    Define car color fill style as property
+   * @todo    Define car color normal and damage fill style as property
    */
   draw(context) {
     context.save()
     context.fillStyle = 'hsl(0,0%,0%)'
+    if (this.isDamage) {
+      context.fillStyle = 'hsl(0,0%,30%)'
+    }
     this.#draw(context)
     context.restore()
 
     this.sensor.draw(context)
+  }
+
+  /**
+   * Assess damage
+   *
+   * @param   {{x: number, y: number}[][]} roadBorders Road borders
+   * @returns {void}
+   */
+  #assessDamage(roadBorders) {
+    if (Mathy.hasPolygonIntersection(roadBorders, this.polygon)) {
+      this.isDamage = true
+    }
   }
 
   /**
