@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/d3p1/self-driving-car/compare/v1.4.0...v1.5.0) (2024-11-04)
+
+
+### Features
+
+* add collision detection [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([b6a8912](https://github.com/d3p1/self-driving-car/commit/b6a891261f47e1d19b2faa71825e93d9c2dad1ad))
+* implement car as polygon [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([a876fb1](https://github.com/d3p1/self-driving-car/commit/a876fb1caa1732a6c4e422f637b02a916624c52e))
+
 # [1.4.0](https://github.com/d3p1/self-driving-car/compare/v1.3.1...v1.4.0) (2024-11-03)
 
 
