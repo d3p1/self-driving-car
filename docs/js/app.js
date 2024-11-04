@@ -69,8 +69,6 @@ export default class App {
    * @param   {number} t Elapsed time in milliseconds
    *                     since the init of the animation
    * @returns {void}
-   * @todo    Encapsulate logic of context `save()`, `translate()`
-   *          and `restore()` related to camera movement
    */
   run(t = 0) {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -96,6 +94,9 @@ export default class App {
    * Draw objects
    *
    * @returns {void}
+   * @todo    Instead of using a camera to draw, create an instance of a
+   *          scene, then pass the scene and the camera to a renderer,
+   *          and encapsulate render logic inside that renderer
    */
   #draw() {
     this.camera.draw(this.context, this.canvas.height * 0.7 - this.car.centerY)

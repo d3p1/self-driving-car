@@ -193,8 +193,8 @@ export default class Sensor {
       y: carCenterY,
     }
     const end = {
-      x: carCenterX - Math.sin(rayAngle - carAngle) * this.rayRadius,
-      y: carCenterY - Math.cos(rayAngle - carAngle) * this.rayRadius,
+      x: carCenterX - Math.sin(rayAngle + carAngle) * this.rayRadius,
+      y: carCenterY - Math.cos(rayAngle + carAngle) * this.rayRadius,
     }
     return [start, end]
   }

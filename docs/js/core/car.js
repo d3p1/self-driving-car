@@ -30,6 +30,11 @@ export default class Car {
   acceleration = 0
 
   /**
+   * @type {{x: number, y: number}[][]}
+   */
+  polygon = []
+
+  /**
    * @type {number}
    */
   centerX
@@ -114,12 +119,12 @@ export default class Car {
    *
    * @param   {CanvasRenderingContext2D} context
    * @returns {void}
+   * @todo    Define car color fill style as property
    */
   draw(context) {
     context.save()
-    context.translate(this.centerX, this.centerY)
-    context.rotate(this.control.angle)
-    this.#draw(context, -this.width / 2, -this.height / 2)
+    context.fillStyle = 'hsl(0,0%,0%)'
+    this.#draw(context)
     context.restore()
 
     this.sensor.draw(context)
@@ -155,20 +160,73 @@ export default class Car {
    * @note    Displacement is velocity (speed and a direction) times time
    */
   #applyDisplacement(t) {
-    this.centerX += Math.sin(this.control.angle) * this.speed * t
+    this.centerX -= Math.sin(this.control.angle) * this.speed * t
     this.centerY -= Math.cos(this.control.angle) * this.speed * t
   }
 
   /**
    * Draw
    *
-   * @param {CanvasRenderingContext2D} context
-   * @param {number}                   x
-   * @param {number}                   y
+   * @param   {CanvasRenderingContext2D} context
+   * @returns {void}
    */
-  #draw(context, x, y) {
+  #draw(context) {
+    this.#buildCarPolygon()
+
     context.beginPath()
-    context.rect(x, y, this.width, this.height)
+    context.moveTo(this.polygon[0][0].x, this.polygon[0][0].y)
+    this.polygon.forEach((segment) => {
+      this.#drawCarSegment(context, segment)
+    })
     context.fill()
+  }
+
+  /**
+   * Draw car segment
+   *
+   * @param   {CanvasRenderingContext2D} context
+   * @param   {{x: number, y: number}[]} segment
+   * @returns {void}
+   */
+  #drawCarSegment(context, segment) {
+    context.lineTo(segment[1].x, segment[1].y)
+  }
+
+  /**
+   * Build car polygon
+   *
+   * @returns {void}
+   */
+  #buildCarPolygon() {
+    this.polygon = []
+
+    const mag = Math.hypot(this.width, this.height) / 2
+    const angle = Math.atan2(this.width, this.height)
+    const alpha = this.control.angle + angle
+    const beta = this.control.angle - angle
+
+    const topLeft = {
+      x: this.centerX - Math.sin(alpha) * mag,
+      y: this.centerY - Math.cos(alpha) * mag,
+    }
+    const topRight = {
+      x: this.centerX - Math.sin(beta) * mag,
+      y: this.centerY - Math.cos(beta) * mag,
+    }
+    const bottomLeft = {
+      x: this.centerX - Math.sin(beta + Math.PI) * mag,
+      y: this.centerY - Math.cos(beta + Math.PI) * mag,
+    }
+    const bottomRight = {
+      x: this.centerX - Math.sin(alpha + Math.PI) * mag,
+      y: this.centerY - Math.cos(alpha + Math.PI) * mag,
+    }
+
+    this.polygon.push(
+      [topLeft, bottomLeft],
+      [bottomLeft, bottomRight],
+      [bottomRight, topRight],
+      [topRight, topLeft],
+    )
   }
 }

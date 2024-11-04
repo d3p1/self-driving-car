@@ -133,12 +133,12 @@ export default class Control {
 
         case 'ArrowLeft':
           this.left = true
-          this.alpha = -this.torque
+          this.alpha = +this.torque
           break
 
         case 'ArrowRight':
           this.right = true
-          this.alpha = +this.torque
+          this.alpha = -this.torque
           break
       }
     })
