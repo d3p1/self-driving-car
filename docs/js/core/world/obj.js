@@ -2,7 +2,7 @@
  * @description World object
  * @author      C. M. de Picciotto <d3p1@d3p1.dev> (https://d3p1.dev/)
  * @note        For now, just the `velocity` getter and setter will be used,
- *              but it is added other property getters abd setters
+ *              but it is added other property getters and setters
  *              for possible future requirements
  */
 export default class Obj {
