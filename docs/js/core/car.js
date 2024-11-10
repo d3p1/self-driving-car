@@ -61,6 +61,16 @@ export default class Car {
   height
 
   /**
+   * @type {string}
+   */
+  color
+
+  /**
+   * @type {string}
+   */
+  damageColor
+
+  /**
    * @type {Control}
    */
   control
@@ -77,6 +87,8 @@ export default class Car {
    * @param {number}  centerY
    * @param {number}  width
    * @param {number}  height
+   * @param {string}  color
+   * @param {string}  damageColor
    * @param {number}  force
    * @param {Control} control
    * @param {Sensor}  sensor
@@ -84,8 +96,10 @@ export default class Car {
   constructor(
     centerX,
     centerY,
-    width,
-    height,
+    width = 50,
+    height = 100,
+    color = 'hsl(200,100%,50%)',
+    damageColor = 'hsl(0,0%,30%)',
     force = 200,
     control = new Control(),
     sensor = new Sensor(),
@@ -94,6 +108,8 @@ export default class Car {
     this.centerY = centerY
     this.width = width
     this.height = height
+    this.color = color
+    this.damageColor = damageColor
     this.force = force
     this.control = control
     this.sensor = sensor
@@ -106,7 +122,7 @@ export default class Car {
    * @param   {{x: number, y: number}[][]} roadBorders Road borders
    * @returns {void}
    */
-  update(t, roadBorders) {
+  update(t, roadBorders = []) {
     if (!this.isDamage) {
       this.control.update(t)
 
@@ -129,13 +145,12 @@ export default class Car {
    *
    * @param   {CanvasRenderingContext2D} context
    * @returns {void}
-   * @todo    Define car color normal and damage fill style as property
    */
   draw(context) {
     context.save()
-    context.fillStyle = 'hsl(0,0%,0%)'
+    context.fillStyle = this.color
     if (this.isDamage) {
-      context.fillStyle = 'hsl(0,0%,30%)'
+      context.fillStyle = this.damageColor
     }
     this.#draw(context)
     context.restore()

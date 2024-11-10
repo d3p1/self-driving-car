@@ -151,6 +151,8 @@ export default class App {
       this.canvas.height - this.canvas.height * 0.2,
       50,
       100,
+      'hsl(10,100%,50%)',
+      'hsl(0,0%,30%)',
       200,
       this.carControl,
     )
