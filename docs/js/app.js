@@ -6,6 +6,7 @@ import Timer from './utils/timer.js'
 import Road from './app/road.js'
 import Car from './app/car.js'
 import CarControl from './app/car/control.js'
+import Traffic from './app/traffic.js'
 import Camera from './core/camera.js'
 import World from './core/world.js'
 
@@ -19,6 +20,11 @@ export default class App {
    * @type {Road}
    */
   road
+
+  /**
+   * @type {Traffic}
+   */
+  traffic
 
   /**
    * @type {Car}
@@ -58,6 +64,7 @@ export default class App {
     this.#initRoad()
     this.#initCarControl()
     this.#initCar()
+    this.#initTraffic()
     this.#initCamera()
     this.#initWorld()
     this.#initTimer()
@@ -86,6 +93,7 @@ export default class App {
    */
   #update(t) {
     this.timer.update(t)
+    this.traffic.update(this.timer.delta)
     this.car.update(this.timer.delta, this.road.borders)
     this.world.update(this.timer.delta)
   }
@@ -111,6 +119,9 @@ export default class App {
     this.world = new World(50)
     this.world.add(this.carControl, null, null, 'omega', 'alpha')
     this.#addCarToWorld(this.car)
+    for (const trafficCar of this.traffic.cars) {
+      this.#addCarToWorld(trafficCar)
+    }
   }
 
   /**
@@ -119,7 +130,7 @@ export default class App {
    * @returns {void}
    */
   #initCamera() {
-    this.camera = new Camera(this.car, this.road)
+    this.camera = new Camera(this.car, this.road, this.traffic)
   }
 
   /**
@@ -129,6 +140,15 @@ export default class App {
    */
   #initRoad() {
     this.road = new Road(this.canvas.width / 2, this.canvas.width * 0.9)
+  }
+
+  /**
+   * Init traffic
+   *
+   * @returns {void}
+   */
+  #initTraffic() {
+    this.traffic = new Traffic(this.road, 1)
   }
 
   /**

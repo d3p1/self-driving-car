@@ -14,14 +14,21 @@ export default class Camera {
   road
 
   /**
+   * @type {Traffic}
+   */
+  traffic
+
+  /**
    * Constructor
    *
-   * @param {Car}  car
-   * @param {Road} road
+   * @param {Car}     car
+   * @param {Road}    road
+   * @param {Traffic} traffic
    */
-  constructor(car, road) {
+  constructor(car, road, traffic) {
     this.car = car
     this.road = road
+    this.traffic = traffic
   }
 
   /**
@@ -39,6 +46,7 @@ export default class Camera {
     context.translate(0, focus)
     this.road.draw(context)
     this.car.draw(context)
+    this.traffic.draw(context)
     context.restore()
   }
 }

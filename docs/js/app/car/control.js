@@ -59,7 +59,7 @@ export default class Control {
   constructor(torque = 20) {
     this.torque = torque
 
-    this.#addKeyListeners()
+    this._addKeyListeners()
   }
 
   /**
@@ -72,6 +72,16 @@ export default class Control {
   update(t) {
     this.#applyAcceleration(t)
     this.#applyDisplacement(t)
+  }
+
+  /**
+   * Add key listeners
+   *
+   * @returns {void}
+   */
+  _addKeyListeners() {
+    this.#addKeyDownListener()
+    this.#addKeyUpListener()
   }
 
   /**
@@ -97,16 +107,6 @@ export default class Control {
    */
   #applyDisplacement(t) {
     this.angle += this.omega * t
-  }
-
-  /**
-   * Add key listeners
-   *
-   * @returns {void}
-   */
-  #addKeyListeners() {
-    this.#addKeyDownListener()
-    this.#addKeyUpListener()
   }
 
   /**
