@@ -3,9 +3,9 @@
  * @author      C. M. de Picciotto <d3p1@d3p1.dev> (https://d3p1.dev/)
  */
 import Timer from './utils/timer.js'
-import Road from './core/road.js'
-import Car from './core/car.js'
-import CarControl from './core/car/control.js'
+import Road from './app/road.js'
+import Car from './app/car.js'
+import CarControl from './app/car/control.js'
 import Camera from './core/camera.js'
 import World from './core/world.js'
 
@@ -110,7 +110,7 @@ export default class App {
   #initWorld() {
     this.world = new World(50)
     this.world.add(this.carControl, null, null, 'omega', 'alpha')
-    this.world.add(this.car, 'centerX', 'centerY', 'speed', 'acceleration')
+    this.#addCarToWorld(this.car)
   }
 
   /**
@@ -185,16 +185,6 @@ export default class App {
   }
 
   /**
-   * Resize canvas
-   *
-   * @returns {void}
-   */
-  #resizeCanvas() {
-    this.canvas.width = window.innerWidth / 3
-    this.canvas.height = window.innerHeight
-  }
-
-  /**
    * Init canvas styles
    *
    * @returns {void}
@@ -203,5 +193,25 @@ export default class App {
     this.canvas.style.backgroundColor = 'hsl(0,0%,93%)'
     this.canvas.style.display = 'block'
     this.canvas.style.margin = '0 auto'
+  }
+
+  /**
+   * Add a car to the world
+   *
+   * @param   {Car}  car
+   * @returns {void}
+   */
+  #addCarToWorld(car) {
+    this.world.add(car, 'centerX', 'centerY', 'speed', 'acceleration')
+  }
+
+  /**
+   * Resize canvas
+   *
+   * @returns {void}
+   */
+  #resizeCanvas() {
+    this.canvas.width = window.innerWidth / 3
+    this.canvas.height = window.innerHeight
   }
 }
