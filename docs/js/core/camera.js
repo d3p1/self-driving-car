@@ -45,8 +45,8 @@ export default class Camera {
     context.save()
     context.translate(0, focus)
     this.road.draw(context)
-    this.car.draw(context)
     this.traffic.draw(context)
+    this.car.draw(context)
     context.restore()
   }
 }

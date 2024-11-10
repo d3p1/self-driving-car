@@ -55,11 +55,15 @@ export default class Sensor {
    * @param   {number}                     carCenterX
    * @param   {number}                     carCenterY
    * @param   {{x: number, y: number}[][]} roadBorders
+   * @param   {Car[]}                      cars
    * @returns {void}
    */
-  update(carAngle, carCenterX, carCenterY, roadBorders) {
+  update(carAngle, carCenterX, carCenterY, roadBorders, cars) {
     this.#createRaySegments(carAngle, carCenterX, carCenterY)
     this.#processIntersections(roadBorders)
+    for (const car of cars) {
+      this.#processIntersections(car.polygon)
+    }
   }
 
   /**

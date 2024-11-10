@@ -120,16 +120,17 @@ export default class Car {
    *
    * @param   {number}                     t           Delta time in seconds
    * @param   {{x: number, y: number}[][]} roadBorders Road borders
+   * @param   {Car[]}                      cars        Other cars
    * @returns {void}
    */
-  update(t, roadBorders = []) {
+  update(t, roadBorders = [], cars = []) {
     if (!this.isDamage) {
       this.control.update(t)
 
       this.#applyAcceleration(t)
       this.#applyDisplacement(t)
 
-      this.#assessDamage(roadBorders)
+      this.#assessDamage(roadBorders, cars)
     }
 
     this.sensor.update(
@@ -137,6 +138,7 @@ export default class Car {
       this.centerX,
       this.centerY,
       roadBorders,
+      cars,
     )
   }
 
@@ -162,11 +164,18 @@ export default class Car {
    * Assess damage
    *
    * @param   {{x: number, y: number}[][]} roadBorders Road borders
+   * @param   {Car[]}                      cars        Other cars
    * @returns {void}
    */
-  #assessDamage(roadBorders) {
+  #assessDamage(roadBorders, cars) {
     if (Mathy.hasPolygonIntersection(roadBorders, this.polygon)) {
       this.isDamage = true
+    }
+
+    for (const car of cars) {
+      if (Mathy.hasPolygonIntersection(car.polygon, this.polygon)) {
+        this.isDamage = true
+      }
     }
   }
 

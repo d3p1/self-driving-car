@@ -94,7 +94,7 @@ export default class App {
   #update(t) {
     this.timer.update(t)
     this.traffic.update(this.timer.delta)
-    this.car.update(this.timer.delta, this.road.borders)
+    this.car.update(this.timer.delta, this.road.borders, this.traffic.cars)
     this.world.update(this.timer.delta)
   }
 
