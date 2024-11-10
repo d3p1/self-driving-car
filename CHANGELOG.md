@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/d3p1/self-driving-car/compare/v1.5.0...v1.6.0) (2024-11-10)
+
+
+### Features
+
+* add car traffic detection [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([fd011af](https://github.com/d3p1/self-driving-car/commit/fd011af8c50c9471a6e3f2b26659b61650bff8aa))
+* add color and damage color properties to car [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([eaa48f9](https://github.com/d3p1/self-driving-car/commit/eaa48f9e19c07adb0fae099ec9e885009ee1fc70))
+* init traffic [[#1](https://github.com/d3p1/self-driving-car/issues/1)] ([7c8fb9d](https://github.com/d3p1/self-driving-car/commit/7c8fb9d286b2895192a340f34bd7bb86004c6076))
+
 # [1.5.0](https://github.com/d3p1/self-driving-car/compare/v1.4.0...v1.5.0) (2024-11-04)
 
 
